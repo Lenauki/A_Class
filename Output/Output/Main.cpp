@@ -46,7 +46,7 @@ int main()
 		[Ctrl + Shift + B] - ºôµå
 		[Ctrl + F5 ] - ºôµå ÈÄ ½ÇÇà
 
-		http : //indevgame.tistory.com/8
+		http : //indevgame.tistory.com
 
 	*******************************************************/
 	
