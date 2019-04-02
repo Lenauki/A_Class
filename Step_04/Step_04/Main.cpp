@@ -20,7 +20,7 @@ int main(void)
 		scanf_s("%d", &iAge);
 
 
-		printf_s("당신의 나이는 [%d] 입니다. \n", iAge);
+		printf_s("당신의 나이는 [%d 세] 입니다. \n", iAge);
 
 		/*************************************************
 
@@ -51,14 +51,14 @@ int main(void)
 		printf_s("당신의 키를 입력하세요: ");
 		scanf_s("%f", &fHeight);
 
-		printf_s("당신의 키는 [%f] 입니다.\n", fHeight);
+		printf_s("당신의 키는 [%.2f cm] 입니다.\n", fHeight);
 
 		float fWidth = 0;
 		printf_s("당신의 몸무게를 입력하세요: ");
 		scanf_s("%f", &fWidth);
 
 
-		printf_s("당신의 몸무게는 [%f] 입니다. \n", fWidth);
+		printf_s("당신의 몸무게는 [%.2f kg] 입니다. \n", fWidth);
 		
 		
 		fHeight /= 100;

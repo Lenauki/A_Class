@@ -85,7 +85,7 @@ int main(void)
 	int iDef = 50;
 
 	// iAtt = iAtt + iDef;
-	iAtt %= iDef;
+	iAtt += iDef;
 	// iAtt = iAtt - iDef;
 	//iAtt -= iDef;
 	// iAtt = iAtt * iDef;
