@@ -14,13 +14,15 @@ int main(void)
 {
 	//** 동적 할당
 	
-	Student* pStudent = CreateStudent();
 	
-	Render(pStudent);
+	Student* ptStudent = (Student*)malloc(sizeof(Student));
+	*ptStudent = tagStudent(10, 20, 30);
 
 
-	
 
+	//printf_s("%d\n", Student.iEng);
+	//printf_s("%d\n", Student.iKor);
+	//printf_s("%d\n", Student.iMath);
 
 	system("pause");
 
@@ -36,6 +38,7 @@ Student* CreateStudent()
 	Student* pStudent = (Student*)malloc(sizeof(Student));
 
 	Initialize(pStudent);
+
 
 	return pStudent;
 }
