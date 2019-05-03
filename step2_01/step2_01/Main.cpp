@@ -1,9 +1,21 @@
 #include "Heders.h"
 
 
-
+//** 열거형
+//enum { AAA, BBB, CCC, DDD, EEE, FFF, GGG }; 
+//*** 정수이자 상수,
+enum SCENEID 
+{ 
+	메뉴			,
+	학생추가		, 
+	학생삭제		, 
+	학생정보변경 ,
+};
+//전역변수
+SCENEID eSCENEID = 메뉴;
 
 //** 함수 전방선언
+void SetScene();
 char* SetName();
 Student* CreateStudent();
 void Initialize(Student* _pStudent);
@@ -12,51 +24,147 @@ void Render(Student* _pStudent);
 
 int main(void)
 {
+
 	//** 동적 할당
+
+	//장면 관리	
 	
-	
-	Student* ptStudent = (Student*)malloc(sizeof(Student));
-	*ptStudent = tagStudent(10, 20, 30);
 
 
+
+	/*
+	Student* ptStudent[3];
+
+
+	for (int i = 0; i < 3; i++)
+	{
+		ptStudent[i] = CreateStudent();
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		Render(ptStudent[i]);
+	}
+	*/
+	/*while (true)
+
+	{
+
+		system("cls");
+		SetScene();
+
+	}
+	
+	*/	
+	system("pause");
+	
 
 	//printf_s("%d\n", Student.iEng);
 	//printf_s("%d\n", Student.iKor);
 	//printf_s("%d\n", Student.iMath);
 
-	system("pause");
-
 	return 0;
 }
 
+void SetScene()
+{
+	switch (eSCENEID)
+	{
 
+	case 메뉴:
+	{
+
+		printf_s("1, 학생 추가\n");
+		printf_s("2, 학생 삭제\n");
+		printf_s("3, 학생 정보 변경\n");
+
+		int iChoice = 0;
+		printf_s("입력 : ");
+		scanf_s("%d", &iChoice);
+
+
+
+
+		if (iChoice == 1)
+			eSCENEID = 학생추가;
+		else if (iChoice == 2)
+			eSCENEID = 학생삭제;
+		else if (iChoice == 3)
+			eSCENEID = 학생정보변경;
+
+
+	}
+	break;
+
+	case 학생추가:
+		system("cls");
+		printf_s("학생 추가 메뉴\n");
+		eSCENEID = 메뉴;
+		system("pause");
+
+		break;
+	case 학생삭제:
+		system("cls");
+		printf_s("학생 삭제 메뉴\n");
+		eSCENEID = 메뉴;
+		system("pause");
+		break;
+
+	case 학생정보변경:
+		system("cls");
+		printf_s("학생 정보 변경 메뉴\n");
+		eSCENEID = 메뉴;
+		system("pause");
+		break;
+	}
+
+
+}
 
 
 
 Student* CreateStudent()
 {
-	Student* pStudent = (Student*)malloc(sizeof(Student));
 
-	Initialize(pStudent);
+	for (int i = 0; i < 3; i++)
+	{
+
+		Student* pStudent = (Student*)malloc(sizeof(Student));
 
 
-	return pStudent;
+
+		Initialize(pStudent);
+		return pStudent;
+
+	}
+	
+
+	
+	
 }
 
 void Initialize(Student* _pStudent)
 {
-	_pStudent->pName = SetName();
 
-	//** 각 점수 입력
-	printf_s("국어 점수 입력 : ");
-	scanf_s("%d", &_pStudent->iKor);
+	
+		_pStudent->pName = SetName();
 
-	printf_s("영어 점수 입력 : ");
-	scanf_s("%d", &_pStudent->iEng);
+		//** 각 점수 입력
+		printf_s("국어 점수 입력 : ");
+		scanf_s("%d", &_pStudent->iKor);
 
-	printf_s("수학 점수 입력 : ");
-	scanf_s("%d", &_pStudent->iMath);
+		printf_s("영어 점수 입력 : ");
+		scanf_s("%d", &_pStudent->iEng);
+
+		printf_s("수학 점수 입력 : ");
+		scanf_s("%d", &_pStudent->iMath);
+	
+	
 }
+
+
+
+
 
 char* SetName()
 {
