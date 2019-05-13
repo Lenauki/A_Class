@@ -9,4 +9,5 @@
 #include<Windows.h>
 
 #include"Enum.h"
-#include "Struct.h"
+#include"Struct.h"
+#include"constant.h"
