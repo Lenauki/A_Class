@@ -7,6 +7,9 @@
 #include <time.h>
 #include <string>
 #include<Windows.h>
+#include<iostream>
+using namespace std;
+
 
 #include"Enum.h"
 #include"Struct.h"
