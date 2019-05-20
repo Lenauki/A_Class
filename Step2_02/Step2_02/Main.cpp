@@ -22,6 +22,7 @@ void InitMonster(Object* _pMonster);
 void MonsterProgress(Object* _pMonster[]);
 void MonsterRender(Object* _pMonster[]);
 
+
 void InitBullet(Object* _Bullet);
 void BulletProgress(Object* _Bullet[]);
 void BulletRender(Object* _Bullet[]);
@@ -38,6 +39,8 @@ DWORD InputKey();
 
 int main(void)
 {
+	
+
 	Object* pPlayer = CreateObject();
 	InitPlayter(pPlayer);	
 
@@ -53,6 +56,7 @@ int main(void)
 	{
 		pMonster[i] = CreateObject();
 		InitMonster(pMonster[i]);
+		
 	}
 
 	DWORD dwTime = GetTickCount();
@@ -103,10 +107,10 @@ void SetScene(Object* _pPlayer, Object* _pMonster[],Object* _Bullet[])
 		BulletProgress(_Bullet);
 		BulletRender(_Bullet);
 
-		/*
+	
 		MonsterProgress(_pMonster);
 		MonsterRender(_pMonster);
-		*/
+		
 		break;
 
 	case SCENEID_STORE:
@@ -193,11 +197,17 @@ void PlayerRender(Object* _pPlayer)
 	//printf_s("Scale y: %f\n", _pPlayer->TransPos.Scale.y);		
 }
 
+
+//몬스터 랜덤출력 해보기
 void InitMonster(Object* _pMonster)
 {
-		_pMonster->TransPos.Position = Vector3(0.f, 0.f);
+	srand(time(NULL));
+		_pMonster->pName = (char*)"Monster";
+		_pMonster->TransPos.Position.x = rand();
+		_pMonster->TransPos.Position.y = rand();
 		_pMonster->TransPos.Scale = Vector3(0.f, 0.f);
-		_pMonster->pName = (char*)"Monster";	
+			
+
 }
 
 
@@ -205,23 +215,24 @@ void MonsterProgress(Object* _pMonster[])
 {
 	for (int i = 0; i < MONSER_MAX; i++)
 	{
-		_pMonster[i]->TransPos.Position.x++;
-		_pMonster[i]->TransPos.Position.y++;
-		_pMonster[i]->TransPos.Scale.x++;
-		_pMonster[i]->TransPos.Scale.y++;	
+		_pMonster[i]->TransPos.Position.x;
+		_pMonster[i]->TransPos.Position.y;
+		
+		
+		
+	
 	}
+	
 }
 
 void MonsterRender(Object* _pMonster[])
 {
 	for (int i = 0; i < MONSER_MAX; i++)
 	{
-		printf_s("Position x: %f\n", _pMonster[i]->TransPos.Position.x);
-		printf_s("Position y: %f\n", _pMonster[i]->TransPos.Position.y);
-		printf_s("Scale x: %f\n", _pMonster[i]->TransPos.Scale.x);
-		printf_s("Scale y: %f\n", _pMonster[i]->TransPos.Scale.y);
-
-		printf_s("닉네임 : %s\n", _pMonster[i]->pName);		
+		SetCurserPosition(
+		_pMonster[i]->TransPos.Position.x,
+		_pMonster[i]->TransPos.Position.y,
+		_pMonster[i]->pName);
 	}
 }
 
@@ -299,6 +310,8 @@ void CreateBullet(Object* _Bullet[], Object* _pPlayer )
 	}	
 }
 
+
+
 //** 입력된 (x, y)좌표에 문자열 출력.
 void SetCurserPosition(int _ix, int _iy, char* _str)
 {
@@ -311,6 +324,8 @@ void SetCurserPosition(int _ix, int _iy, char* _str)
 	//** 이동된 위치에 문자열 출력.
 	cout << _str;
 }
+
+
 
 DWORD InputKey()
 {
