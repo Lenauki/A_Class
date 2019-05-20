@@ -232,7 +232,7 @@ void InitMonster(Object* _pMonster)
 {
 		_pMonster->pName = (char*)"★";		
 		_pMonster->TransPos.Position = Vector3(0.f, 0.f);
-		_pMonster->TransPos.Scale = Vector3(strlen(_pMonster->pName), 1.f);
+		_pMonster->TransPos.Scale = Vector3(strlen(_pMonster->pName), 0.f);
 		_pMonster->TransPos.eDirection = KEYID_CENTER;
 	
 
@@ -242,7 +242,7 @@ void InitMonster(Object* _pMonster)
 void MonsterProgress(Object* _pMonster[])
 {
 	//** 일정 시간 마다...
-	if (dmMonsterTime + 300 < GetTickCount())
+	if (dmMonsterTime + 1500 < GetTickCount())
 	{
 		dmMonsterTime = GetTickCount();
 		//** 몬스터 생성.
@@ -253,9 +253,10 @@ void MonsterProgress(Object* _pMonster[])
 
 void MonsterRender(Object* _pMonster[])
 {
-	//**
+	//**  모든 몬스터 리스트를 확인.
 	for ( int i = 0; i < MONSTER_MAX; i++)
 	{
+		//** 만약에 몬스터 리스트에 몬스터가 있다면.....
 		if (_pMonster[i])
 		{
 			SetCurserPosition(
@@ -267,6 +268,32 @@ void MonsterRender(Object* _pMonster[])
 	}
 	
 }
+void CreateMonster(Object* _pMonster[])
+{
+	//** 몬스터 리스트를 모두 확인.
+	for (int i = 0; i < MONSTER_MAX; i++)
+	{
+		//** 만약 몬스터 리스트에 몬스터가 없다면 없다면...
+		if (!_pMonster[i])
+		{
+			//** 몬스터를 생성.
+			_pMonster[i] = CreateObject();
+
+			//** 생성된 몬스터 초기회.
+			InitMonster(_pMonster[i]);
+
+			//** 몬스터의 위치를 랜덤한 좌표로 변경.
+			_pMonster[i]->TransPos.Position = Vector3(
+				rand() % (WINSIZEX - 5) + 2, rand() % (WINSIZEY - 2) + 1);
+
+			//** 모든 작업이 종료된 후 구문 탈출
+
+			break;
+		}
+	}
+
+
+}
 
 
 void InitBullet(Object* _Bullet)
@@ -277,7 +304,7 @@ void InitBullet(Object* _Bullet)
 	
 	_Bullet->TransPos.Position = Vector3(0.f, 0.f);	
 	_Bullet->TransPos.Scale = Vector3(strlen(_Bullet->pName), 1.f);
-	_Bullet->TransPos.eDirection += KEYID_CENTER;
+	_Bullet->TransPos.eDirection = KEYID_CENTER;
 
 }
 
@@ -322,7 +349,7 @@ void BulletProgress(Object* _Bullet[])
 					_Bullet[i]->TransPos.Position.x += 2;
 					//** 만약 증가된 후에 x 좌표가 월드좌표 95보다 크다면...
 					if ((_Bullet[i]->TransPos.Position.x +
-						_Bullet[i]->TransPos.Scale.x > (WINSIZEX - 2)))
+						_Bullet[i]->TransPos.Scale.x) > (WINSIZEX - 2))
 
 					{
 						//** 동적 할당 해제.
@@ -404,37 +431,11 @@ void CreateBullet(Object* _Bullet[], Object* _pPlayer )
 	}	
 }
 
-void SetBulletDirection(Object* _pBullet, DWORD _dwDirection)
+void SetBulletDirection(Object* _pBullet, DWORD _dwDir)
 {
-	_pBullet->TransPos.eDirection = _dwDirection;
+	_pBullet->TransPos.eDirection = _dwDir;
 }
 
-void CreateMonster(Object* _pMonster[])
-{
-	//** 몬스터 리스트를 모두 확인.
-	for (int i = 0; i < MONSTER_MAX; i++)
-	{
-		//** 만약 몬스터 리스트에 몬스터가 없다면 없다면...
-		if (!_pMonster[i])
-		{
-			//** 몬스터를 생성.
-			_pMonster[i] = CreateObject();
-
-			//** 생성된 몬스터 초기회.
-			InitMonster(_pMonster[i]);
-
-			//** 몬스터의 위치를 랜덤한 좌표로 변경.
-			_pMonster[i]->TransPos.Position = Vector3(
-			rand()%(WINSIZEX-5)+2, rand() % (WINSIZEY - 2) + 1);
-				
-			//** 모든 작업이 종료된 후 구문 탈출
-			
-			break;
-		}
-	}
-
-
-}
 
 
 void BackGroundRender()
