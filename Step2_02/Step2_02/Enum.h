@@ -9,6 +9,16 @@ enum SCENEID
 };
 
 
+enum DIRID
+{	
+	DIRID_UP	,
+	DIRID_DOWN	,
+	DIRID_RIGHT	,
+	DIRID_LEFT	,
+	
+};
+
+
 
 // 
 

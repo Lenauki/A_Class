@@ -6,7 +6,8 @@
 //** 상수, 정수
 
 //** 전역변수
-SCENEID eSCENEID = SCENEID_LOGO;
+SCENEID eSCENEID = SCENEID_STAGE;
+DWORD dmMonsterTime = 0;
 
 //** 함수 전방선언
 void SetScene(Object* _pPlayer, Object* _pMonster[], Object* _Bullet[]);
@@ -21,12 +22,19 @@ void PlayerRender(Object* _pPlayer);
 void InitMonster(Object* _pMonster);
 void MonsterProgress(Object* _pMonster[]);
 void MonsterRender(Object* _pMonster[]);
-
+void CreateMonster(Object* _pMonster[]);
 
 void InitBullet(Object* _Bullet);
 void BulletProgress(Object* _Bullet[]);
 void BulletRender(Object* _Bullet[]);
 void CreateBullet(Object* _Bullet[], Object* _pPlayer);
+
+void SetBulletDirection(Object* _pBullet, DWORD _dwDirection);
+
+
+void BackGroundRender();
+
+
 
 void SetCurserPosition(int _ix, int _iy, char* _str);
 
@@ -39,36 +47,42 @@ DWORD InputKey();
 
 int main(void)
 {
-	
+	//** rand Initialize
+	srand(GetTickCount());
 
+	//** Player Initialize
 	Object* pPlayer = CreateObject();
 	InitPlayter(pPlayer);	
 
+
+	//** BulletList Init (= NULL)
 	Object* Bullet[Bullet_MAX];
 
 	for (int i = 0; i < Bullet_MAX; i++)
-	{
 		Bullet[i] = NULL;
-	}
 
-	Object* pMonster[MONSER_MAX];
-	for (int i = 0; i < MONSER_MAX; i++)
-	{
-		pMonster[i] = CreateObject();
-		InitMonster(pMonster[i]);
-		
-	}
-
-	DWORD dwTime = GetTickCount();
+	//** MonsterList Init (= NULL)
+	Object* pMonster[MONSTER_MAX];
+	for (int i = 0; i < MONSTER_MAX; i++)
+		pMonster[i] = NULL;		
 	
+
+	//**FrameTime Initialize
+	DWORD dwTime = GetTickCount();
+
+	//**Create Monster Time Initialize
+	dmMonsterTime = GetTickCount();
+	
+
 	while (true)
 	{
-		if (dwTime + 50 < GetTickCount())
+		if (dwTime + 80 < GetTickCount())
 		{
 			dwTime = GetTickCount();
 			system("cls");
-
-			SetScene(pPlayer, pMonster, Bullet);										
+			
+			SetScene(pPlayer, pMonster, Bullet);	
+			
 		}
 	}
 
@@ -101,14 +115,16 @@ void SetScene(Object* _pPlayer, Object* _pMonster[],Object* _Bullet[])
 		break;
 
 	case SCENEID_STAGE:
+		BackGroundRender();
+		
+		//** Progress
 		PlayerProgress(_pPlayer, _Bullet);
-		PlayerRender(_pPlayer);
-
 		BulletProgress(_Bullet);
-		BulletRender(_Bullet);
-
-	
 		MonsterProgress(_pMonster);
+
+		//** Render
+		PlayerRender(_pPlayer);
+		BulletRender(_Bullet);
 		MonsterRender(_pMonster);
 		
 		break;
@@ -157,7 +173,8 @@ void InitPlayter(Object* _pPlayer)
 {
 	_pPlayer->pName = (char*)"옷";
 	_pPlayer->TransPos.Position = Vector3(0.f, 0.f);
-	_pPlayer->TransPos.Scale = Vector3(0.f, 0.f);
+	_pPlayer->TransPos.Scale = Vector3(strlen(_pPlayer->pName), 0.f);
+	_pPlayer->TransPos.eDirection = KEYID_CENTER;
 }
 
 
@@ -166,16 +183,28 @@ void PlayerProgress(Object* _pPlayer, Object* _Bullet[])
 	DWORD dwKey = InputKey();
 
 	if (dwKey & KEYID_UP)
+	{
 		_pPlayer->TransPos.Position.y--;
+		_pPlayer->TransPos.eDirection = KEYID_UP;
+	}
+		
 	
 	if (dwKey & KEYID_DOWN)
+	{
 		_pPlayer->TransPos.Position.y++;
+		_pPlayer->TransPos.eDirection = KEYID_DOWN;
+	}
 
 	if (dwKey & KEYID_LEFT)
+	{
 		_pPlayer->TransPos.Position.x--;
-
+		_pPlayer->TransPos.eDirection = KEYID_LEFT;
+	}
 	if (dwKey & KEYID_RIGHT)
+	{
 		_pPlayer->TransPos.Position.x++;
+		_pPlayer->TransPos.eDirection = KEYID_RIGHT;
+	}
 	
 	//** 만약 스페이스 키를 입력 했다면...
 	if (dwKey & KEYID_SPACE)
@@ -190,7 +219,7 @@ void PlayerRender(Object* _pPlayer)
 		_pPlayer->TransPos.Position.x,
 		_pPlayer->TransPos.Position.y,
 		_pPlayer->pName);
-
+	
 	//printf_s("Position x: %f\n", _pPlayer->TransPos.Position.x);
 	//printf_s("Position y: %f\n", _pPlayer->TransPos.Position.y);
 	//printf_s("Scale x: %f\n", _pPlayer->TransPos.Scale.x);
@@ -201,49 +230,55 @@ void PlayerRender(Object* _pPlayer)
 //몬스터 랜덤출력 해보기
 void InitMonster(Object* _pMonster)
 {
-	srand(time(NULL));
-		_pMonster->pName = (char*)"Monster";
-		_pMonster->TransPos.Position.x = rand();
-		_pMonster->TransPos.Position.y = rand();
-		_pMonster->TransPos.Scale = Vector3(0.f, 0.f);
-			
+		_pMonster->pName = (char*)"★";		
+		_pMonster->TransPos.Position = Vector3(0.f, 0.f);
+		_pMonster->TransPos.Scale = Vector3(strlen(_pMonster->pName), 1.f);
+		_pMonster->TransPos.eDirection = KEYID_CENTER;
+	
 
 }
 
 
 void MonsterProgress(Object* _pMonster[])
 {
-	for (int i = 0; i < MONSER_MAX; i++)
+	//** 일정 시간 마다...
+	if (dmMonsterTime + 300 < GetTickCount())
 	{
-		_pMonster[i]->TransPos.Position.x;
-		_pMonster[i]->TransPos.Position.y;
-		
-		
-		
-	
+		dmMonsterTime = GetTickCount();
+		//** 몬스터 생성.
+		CreateMonster(_pMonster);
 	}
 	
 }
 
 void MonsterRender(Object* _pMonster[])
 {
-	for (int i = 0; i < MONSER_MAX; i++)
+	//**
+	for ( int i = 0; i < MONSTER_MAX; i++)
 	{
-		SetCurserPosition(
-		_pMonster[i]->TransPos.Position.x,
-		_pMonster[i]->TransPos.Position.y,
-		_pMonster[i]->pName);
+		if (_pMonster[i])
+		{
+			SetCurserPosition(
+				_pMonster[i]->TransPos.Position.x,
+				_pMonster[i]->TransPos.Position.y,
+				_pMonster[i]->pName);
+		}
+
 	}
+	
 }
 
 
 void InitBullet(Object* _Bullet)
 {
-	_Bullet->TransPos.Position = Vector3(0.f, 0.f);
-	
-	_Bullet->TransPos.Scale = Vector3(0.f, 0.f);
 
 	_Bullet->pName = (char*)"장풍";
+
+	
+	_Bullet->TransPos.Position = Vector3(0.f, 0.f);	
+	_Bullet->TransPos.Scale = Vector3(strlen(_Bullet->pName), 1.f);
+	_Bullet->TransPos.eDirection += KEYID_CENTER;
+
 }
 
 void BulletProgress(Object* _Bullet[])
@@ -255,17 +290,73 @@ void BulletProgress(Object* _Bullet[])
 		if (_Bullet[i])
 		{
 			//** 총알의 x죄표를 2씩 증가 시킨다.
-			_Bullet[i]->TransPos.Position.x += 2;
+			
+
+			switch (_Bullet[i]->TransPos.eDirection)
+			{
+				case KEYID_UP:
+					_Bullet[i]->TransPos.Position.y --;
+					//** 만약 증가된 후에 y 좌표가 월드좌표 0보다 작다면...
+					if ((_Bullet[i]->TransPos.Position.y <= 1))
+
+					{
+						//** 동적 할당 해제.
+						free(_Bullet[i]);
+
+						//** 초기화/
+						_Bullet[i] = NULL;
+					}
+				case KEYID_DOWN:
+					_Bullet[i]->TransPos.Position.y ++;
+					//** 만약 증가된 후에 y 좌표가 월드좌표 30보다 크다면...
+					if ((_Bullet[i]->TransPos.Position.y >= (WINSIZEY - 1)))
+
+					{
+						//** 동적 할당 해제.
+						free(_Bullet[i]);
+
+						//** 초기화/
+						_Bullet[i] = NULL;
+					}
+				case KEYID_RIGHT:
+					_Bullet[i]->TransPos.Position.x += 2;
+					//** 만약 증가된 후에 x 좌표가 월드좌표 95보다 크다면...
+					if ((_Bullet[i]->TransPos.Position.x +
+						_Bullet[i]->TransPos.Scale.x > (WINSIZEX - 2)))
+
+					{
+						//** 동적 할당 해제.
+						free(_Bullet[i]);
+
+						//** 초기화/
+						_Bullet[i] = NULL;
+					}
+
+				case KEYID_LEFT:
+					_Bullet[i]->TransPos.Position.x -= 2;
+					//** 만약 증가된 후에 x 좌표가 월드좌표 0보다 작다면...
+					if ((_Bullet[i]->TransPos.Position.x <= 0))
+
+					{
+						//** 동적 할당 해제.
+						free(_Bullet[i]);
+
+						//** 초기화/
+						_Bullet[i] = NULL;
+					}
+				
+			}
 
 			//** 만약 증가된 후에 x 좌표가 월드좌표 95보다 크다면...
-			if (_Bullet[i]->TransPos.Position.x > 95)
-			{
-				//** 동적 할당 해제.
-				free(_Bullet[i]);
+			//if (_Bullet[i]->TransPos.Position.x + _Bullet[i]->TransPos.Scale.x > (WINSIZEX-2))
+				
+			//{
+			//	//** 동적 할당 해제.
+			//	free(_Bullet[i]);
 
-				//** 초기화/
-				_Bullet[i] = NULL;			
-			}
+			//	//** 초기화/
+			//	_Bullet[i] = NULL;			
+			//}
 		}				
 	}
 }
@@ -304,12 +395,77 @@ void CreateBullet(Object* _Bullet[], Object* _pPlayer )
 			//** 총알의 위치를 플레이어의 좌표로 변경.
 			_Bullet[i]->TransPos.Position = _pPlayer->TransPos.Position;
 
+			//** 플레이어의 현재 방향에 총알을 설정.
+			SetBulletDirection(_Bullet[i], _pPlayer->TransPos.eDirection);
+
 			//** 모든 작업이 종료된 후 해당 구문 탈출.
 			break;
 		}
 	}	
 }
 
+void SetBulletDirection(Object* _pBullet, DWORD _dwDirection)
+{
+	_pBullet->TransPos.eDirection = _dwDirection;
+}
+
+void CreateMonster(Object* _pMonster[])
+{
+	//** 몬스터 리스트를 모두 확인.
+	for (int i = 0; i < MONSTER_MAX; i++)
+	{
+		//** 만약 몬스터 리스트에 몬스터가 없다면 없다면...
+		if (!_pMonster[i])
+		{
+			//** 몬스터를 생성.
+			_pMonster[i] = CreateObject();
+
+			//** 생성된 몬스터 초기회.
+			InitMonster(_pMonster[i]);
+
+			//** 몬스터의 위치를 랜덤한 좌표로 변경.
+			_pMonster[i]->TransPos.Position = Vector3(
+			rand()%(WINSIZEX-5)+2, rand() % (WINSIZEY - 2) + 1);
+				
+			//** 모든 작업이 종료된 후 구문 탈출
+			
+			break;
+		}
+	}
+
+
+}
+
+
+void BackGroundRender()
+{
+	for (int y = 0; y < WINSIZEY; y++)
+	{
+		if (y == 0 || y == (WINSIZEY - 1))
+		{
+			SetCurserPosition(0, y, (char*)"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		}
+		
+		else
+		{
+			SetCurserPosition(0, y, (char*)"■");
+			SetCurserPosition(WINSIZEX - 2, y, (char*)"■");
+		}
+		/*for (int x = 0; x < WINSIZEX; x += 2)
+		{
+			if (y > 0 && y < (WINSIZEX - 1))
+			{
+				if (x == 0 || x == (WINSIZEX - 2))
+				{
+					SetCurserPosition(x, y, (char*)"■");
+				}
+			}
+
+		}*/				
+	}
+
+
+}
 
 
 //** 입력된 (x, y)좌표에 문자열 출력.
