@@ -29,7 +29,7 @@ void BulletProgress(Object* _Bullet[]);
 void BulletRender(Object* _Bullet[]);
 void CreateBullet(Object* _Bullet[], Object* _pPlayer);
 
-void SetBulletDirection(Object* _pBullet, DWORD _dwDirection);
+void SetBulletDirection(Object* _Bullet, DWORD _dwDir);
 
 
 void BackGroundRender();
@@ -441,9 +441,9 @@ void CreateBullet(Object* _Bullet[], Object* _pPlayer )
 	}	
 }
 
-void SetBulletDirection(Object* _pBullet, DWORD _dwDir)
+void SetBulletDirection(Object* _Bullet, DWORD _dwDir)
 {
-	_pBullet->TransPos.eDirection = (DIRID)_dwDir;
+	_Bullet->TransPos.eDirection = (DIRID)_dwDir;
 }
 
 
