@@ -23,7 +23,7 @@ typedef struct tagTransform
 	Vector3 Position;
 	Vector3 Scale;
 	
-	DWORD eDirection;
+	DIRID eDirection;
 
 }Transform;
 
@@ -36,15 +36,7 @@ typedef struct tagObject
 
 	Transform TransPos;
 
-	/*
 	
-	int iAtt;
-	int iDef;
-
-	int iHP;
-	int iMP;
-	
-	*/
 	tagObject()
 	{
 

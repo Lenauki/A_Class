@@ -15,7 +15,7 @@ enum DIRID
 	DIRID_DOWN	,
 	DIRID_RIGHT	,
 	DIRID_LEFT	,
-	
+
 };
 
 
