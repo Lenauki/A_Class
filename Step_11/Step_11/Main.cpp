@@ -225,17 +225,17 @@ void PlayerProgress(Object* _pPlayer, Object* _pMonster[])
 		break;
 
 		case DIRID_DOWN:
-			if (_pPlayer->TransPos.Position.y < (WINSIZEY -2))
+		if (_pPlayer->TransPos.Position.y < (WINSIZEY -2))
 		_pPlayer->TransPos.Position.y++;
 		break;
 
 		case DIRID_RIGHT:
-			if (_pPlayer->TransPos.Position.x > 2)
+			/*if (_pPlayer->TransPos.Position.x > 2)*/
 		_pPlayer->TransPos.Position.x++;
 		break;
 
 		case DIRID_LEFT:
-			if (_pPlayer->TransPos.Position.x < (WINSIZEX-4))
+			/*if (_pPlayer->TransPos.Position.x < (WINSIZEX-4))*/
 		_pPlayer->TransPos.Position.x--;
 		break;
 
