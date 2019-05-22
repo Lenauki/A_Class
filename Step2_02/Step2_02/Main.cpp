@@ -299,7 +299,7 @@ void CreateMonster(Object* _pMonster[])
 void InitBullet(Object* _Bullet)
 {
 
-	_Bullet->pName = (char*)"ÀåÇ³";
+	_Bullet->pName = (char*)"¡ß";
 
 	_Bullet->TransPos.eDirection = (DIRID)KEYID_CENTER;
 	_Bullet->TransPos.Position = Vector3(0.f, 0.f);	
