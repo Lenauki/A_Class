@@ -32,7 +32,7 @@ int main(void)
 
 
 
-	/*
+	
 	Student* ptStudent[3];
 
 
@@ -45,8 +45,8 @@ int main(void)
 	{
 		Render(ptStudent[i]);
 	}
-	*/
-	/*while (true)
+	
+	while (true)
 
 	{
 
@@ -55,7 +55,7 @@ int main(void)
 
 	}
 	
-	*/	
+	
 	system("pause");
 	
 

@@ -1,9 +1,23 @@
 #include"Headers.h"
 
+
 //class
 
 //** c		절차지향
 //** c++	객체지향
+
+
+/***********************************
+	** 객체지향 언어(OOP) 특징 5 가지
+
+	1. 정보은닉
+	2. 캡슐화
+	3. 추상화
+	4. 상속
+	5. 다형성
+
+***********************************/
+
 
 //객체는 모든 것을 의미. 예를 들면 모든 사물은 객체이다. 키보드도 객체이고 키보드의 버튼도 객체이다.
 
@@ -39,7 +53,7 @@ class Object
 			printf_s("X: %f\nY: %f\n",
 				tTransPos.Position.x,
 				tTransPos.Position.y);
-		}
+		};
 public:
 	Object() //** 생성된 직후 호출
 	
@@ -79,13 +93,13 @@ int main(void)
 	BB.Render();
 	printf_s("끝\n");
 	//생성자를 이용
-	/*
-	pPlayer->Initialize();
+	
+	//pPlayer->Initialize();
 	pPlayer->Render();
 
-	pMonster->Initialize();
+	//pMonster->Initialize();
 	pMonster->Render();
-	*/
+	
 
 	
 	//free(pObj);

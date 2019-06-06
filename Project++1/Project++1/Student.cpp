@@ -3,23 +3,32 @@
 
 Student::Student()
 {
-
-};
+	
+	
+};	
+	
+	
 Student ::~Student()
 {
-
+	
 };
 
 //함수 정의
 void Student::Initialize()
 {
-	m_tInfo.iKor;
-	m_tInfo.iEng;
-	m_tInfo.iMath;
+	m_tInfo.iNum = 0;
+	m_tInfo.iKor =0;
+	m_tInfo.iEng =0;
+	m_tInfo.iMath =0;
 }
 
 void Student::Progress()
 {
+	
+
+	cout << "학생 번호 입력 :";
+	cin >> m_tInfo.iNum;
+
 	cout << "국어점수입력:";
 	cin >> m_tInfo.iKor;
 
@@ -32,9 +41,16 @@ void Student::Progress()
 }
 void Student::Render()
 {
-	cout << "국어 점수 : " << m_tInfo.iKor << endl;
-	cout << "영어 점수 : " << m_tInfo.iEng << endl;
-	cout << "수학 점수 : " << m_tInfo.iMath << endl;
+	if (m_tInfo.iNum > 0)//&& m_tInfo.iKor != 0 && m_tInfo.iEng != 0 && m_tInfo.iMath != 0
+	{
+		cout << "학생 번호 : " << m_tInfo.iNum << endl;
+		cout << "국어 점수 : " << m_tInfo.iKor << endl;
+		cout << "영어 점수 : " << m_tInfo.iEng << endl;
+		cout << "수학 점수 : " << m_tInfo.iMath << endl;
+		cout << endl;
+	}
+	
+	
 }
 void Student::Release()
 {

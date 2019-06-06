@@ -21,6 +21,7 @@ public:
 	void Progress();
 	void Render();
 	void Release();
+	
 
 public:
 	Student();
