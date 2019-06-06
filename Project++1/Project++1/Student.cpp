@@ -50,7 +50,7 @@ void Student::Render()
 		cout << endl;
 	}
 	
-	
+	//수정완료
 }
 void Student::Release()
 {
