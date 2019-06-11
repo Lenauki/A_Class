@@ -1,9 +1,10 @@
 #pragma once
+
 typedef struct tagScore
 {
-	char cName;
-	int iNum;
+	char* szName;
 	int iKor;
 	int iEng;
 	int iMath;
-}Score; 
+
+}Score;

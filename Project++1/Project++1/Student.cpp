@@ -1,13 +1,10 @@
 #include"Student.h"
 
-
 Student::Student()
 {
-	
-	
+		
 };	
-	
-	
+		
 Student ::~Student()
 {
 	
@@ -23,11 +20,13 @@ void Student::Initialize()
 }
 
 void Student::Progress()
-{
-	
-
+{	
 	cout << "학생 번호 입력 :";
 	cin >> m_tInfo.iNum;
+
+	char str[128] = "";
+	cout << "이름 입력";
+	
 
 	cout << "국어점수입력:";
 	cin >> m_tInfo.iKor;
@@ -37,11 +36,10 @@ void Student::Progress()
 
 	cout << "수학점수입력:";
 	cin >> m_tInfo.iMath;
-
 }
 void Student::Render()
 {
-	if (m_tInfo.iNum > 0)//&& m_tInfo.iKor != 0 && m_tInfo.iEng != 0 && m_tInfo.iMath != 0
+	if (m_tInfo.iNum > 0)
 	{
 		cout << "학생 번호 : " << m_tInfo.iNum << endl;
 		cout << "국어 점수 : " << m_tInfo.iKor << endl;
@@ -49,10 +47,9 @@ void Student::Render()
 		cout << "수학 점수 : " << m_tInfo.iMath << endl;
 		cout << endl;
 	}
-	
-	//수정완료
 }
 void Student::Release()
 {
 
 }
+

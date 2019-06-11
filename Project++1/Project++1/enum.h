@@ -9,5 +9,4 @@ enum Scene
 	모든학생점수		,
 };
 
-
-const int Student_MAX = 5;
+const int Student_MAX = 8;
