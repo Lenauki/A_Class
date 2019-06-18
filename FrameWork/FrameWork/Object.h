@@ -6,12 +6,14 @@ private:
 	//** 변수선언
 	INFO m_tInfo;
 public:
-	void Initalize();
-	void Progress();
-	void Render();
-	void Releze();
-
-
+	virtual void Initalize();
+	virtual void Progress();
+	virtual void Render();
+	virtual void Releze();
+	virtual	void Average();
+	
+public:
+	INFO GetInfo() { return m_tInfo; }
 
 public:
 	Object() ;

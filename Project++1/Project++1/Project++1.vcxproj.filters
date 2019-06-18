@@ -19,6 +19,9 @@
     <Filter Include="헤더 파일\Include">
       <UniqueIdentifier>{0d6e9c06-3a1c-4f5d-bd0e-5cf35357dcd9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Main">
+      <UniqueIdentifier>{ee111495-fa2d-42a0-b9ec-3d0719df2c19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -26,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="Student.cpp">
       <Filter>소스 파일\Student</Filter>
+    </ClCompile>
+    <ClCompile Include="maain.cpp">
+      <Filter>소스 파일\Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="enum.h">
       <Filter>헤더 파일\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>소스 파일\Main</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

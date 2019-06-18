@@ -11,12 +11,11 @@ int main(void)
 
 	while (true)
 	{
-		system("pause");
+		system("cls");
 		Main.Progress();
-		Main.Render();
-
+		system("pause");
 	}
-
+	system("pause");
 
 	return 0;
 }

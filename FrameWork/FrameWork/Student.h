@@ -5,23 +5,24 @@ class Student : public Object
 {
 
 private:
-	//** 변수선언
 	INFO m_tInfo;
-
+	int iTotal;
+	int iAverage;
+	int iATotal;
+	int iAAR;
 public:
-	void Initalize();
-	void Progress();
-	void Render();
-	void Releze();
+	virtual void  Initalize()override;
+	virtual void  Progress()override;
+	virtual void  Render()override;
+	virtual void  Releze()override;
+	virtual	void Average()override;
+	
+
 
 public:
 	INFO GetInfo() { return m_tInfo; }
-
 public:
 	Student();
 	~Student() ;
-
-
-
 };
 

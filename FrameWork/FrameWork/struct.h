@@ -9,5 +9,7 @@ typedef struct tagInfo
 	int iKor;
 	int iEng;
 	int iMath;
-
+	int itotal;
+	
 }INFO;
+

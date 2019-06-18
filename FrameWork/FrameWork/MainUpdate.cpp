@@ -6,8 +6,7 @@ MainUpdate::MainUpdate()
 
 MainUpdate::~MainUpdate()
 {
-	
-
+	Releze();
 }
 
 void MainUpdate::Initalize()
@@ -24,9 +23,11 @@ void MainUpdate::Progress()
 	cout << "3. 학생 삭제\n";
 	cout << "4. 선택 출력\n";
 	cout << "5. 모두 출력\n";
+	cout << "6. 평균 출력\n";
+	cout << "7. 모든 평균 출력\n";
 	cout << "입력 : ";
 
-	int iChoice, i;
+	
 	cin >> iChoice;
 
 	switch (iChoice)
@@ -47,9 +48,9 @@ void MainUpdate::Progress()
 		{
 			if (m_iCount == 1)
 			{
-				m_ptInfo[m_iCount - 1]->Progress();
-				cout << "[ " << m_ptInfo[m_iCount - 1]->GetInfo().pName
-					<< " ] 학생의 정보를 변경 하였습니다.\n";
+				m_ptInfo[i - 1]->Progress();
+
+			
 				break;
 			}
 			else
@@ -62,8 +63,7 @@ void MainUpdate::Progress()
 				{
 					m_ptInfo[i - 1]->Progress();
 
-					cout << "[ " << m_ptInfo[i - 1]->GetInfo().pName
-						<< " ] 학생의 정보를 변경 하였습니다.\n";
+				
 					break;
 				}
 				else
@@ -80,9 +80,7 @@ void MainUpdate::Progress()
 		{
 			if (m_iCount == 1)
 			{
-				cout << "[ " << m_ptInfo[m_iCount - 1]->GetInfo().pName
-					<< " ] 학생의 정보를 삭제 하였습니다.\n";
-
+			
 				delete m_ptInfo[m_iCount - 1];
 				m_ptInfo[m_iCount - 1] = NULL;
 
@@ -97,15 +95,14 @@ void MainUpdate::Progress()
 
 				if (i > 0 && i <= m_iCount)
 				{
-					cout << "[ " << m_ptInfo[i - 1]->GetInfo().pName
-						<< " ] 학생의 정보를 삭제 하였습니다.\n";
+				
 
 					delete m_ptInfo[i - 1];
 					m_ptInfo[i - 1] = NULL;
 
 					for (int j = i - 1; j < m_iCount - 1; j++)
 					{
-						Student* pTemp = m_ptInfo[j];
+						Object* pTemp = m_ptInfo[j];
 						m_ptInfo[j] = m_ptInfo[j + 1];
 						m_ptInfo[j + 1] = pTemp;
 					}
@@ -128,8 +125,7 @@ void MainUpdate::Progress()
 			if (m_iCount == 1)
 			{
 				m_ptInfo[m_iCount - 1]->Render();
-				cout << "[ " << m_ptInfo[m_iCount - 1]->GetInfo().pName
-					<< " ] 학생의 정보를 출력 하였습니다.\n";
+				
 				break;
 			}
 			else
@@ -142,8 +138,7 @@ void MainUpdate::Progress()
 				if (i > 0 && i <= m_iCount)
 				{
 					m_ptInfo[i - 1]->Render();
-					cout << "[ " << m_ptInfo[m_iCount - 1]->GetInfo().pName
-						<< " ] 학생의 정보를 출력 하였습니다.\n";
+					
 					break;
 				}
 				else
@@ -157,16 +152,95 @@ void MainUpdate::Progress()
 			cout << "출력할 대상이 1명이라도 있어야 합니다." << endl;
 		else
 			Render();
+	
+		break;
+
+	case 6:
+		if (!m_iCount)
+			cout << "출력할 대상이 1명이라도 있어야 합니다." << endl;
+
+		while (m_iCount != 0)
+		{
+			if (m_iCount == 1)
+			{
+				m_ptInfo[m_iCount - 1]->Average();
+			
+				break;
+			}
+			else
+			{
+				cout << "( 1 ~ " << m_iCount << " )\n";
+				cout << "출력 대상 선택 : ";
+				cin >> i;
+				// i = 2;
+
+				if (i > 0 && i <= m_iCount)
+				{
+					m_ptInfo[i - 1]->Average();
+					
+					break;
+				}
+				else
+					continue;
+			}
+		}
+
+	case 7:
+		if (!m_iCount)
+			cout << "출력할 대상이 1명이라도 있어야 합니다." << endl;
+		else
+			StudentALLAverage();
+
 		break;
 	}
 
+	
 
 }
 
 void MainUpdate::Render()
 {
+	for (int i = 0; i < m_iCount; i++)
+	{
+		m_ptInfo[i]->Render();
+		cout << endl;
+	}
 }
 
 void MainUpdate::Releze()
 {
+	for (int i = 0; i < MAX_STUDENT; i++)
+	{
+		delete m_ptInfo[i];
+		m_ptInfo[i] = NULL;
+	}
+}
+
+void MainUpdate::StudentRender()
+{
+	
+}
+
+void MainUpdate::StudentDelete()
+{
+
+}
+
+void MainUpdate::StudentProgress()
+{
+	
+}
+
+void MainUpdate::StudentAverage()
+{
+	
+	
+		m_ptInfo[i]->Average();
+	
+	
+}
+
+void MainUpdate::StudentALLAverage()
+{
+	m_ptInfo[m_iCount - 1]->Average();
 }

@@ -1,4 +1,5 @@
 #include"Student.h"
+#include "Main.h"
 
 // namespace std를 사용함 cout/ cin이 std 안에 포함대어있음
 /*
@@ -45,7 +46,7 @@ int main(void)
 
 	while (true)
 	{
-		SetScene(Snt);
+		Snt->Progress();
 	}
 		
 	return 0;
@@ -54,7 +55,7 @@ int main(void)
 void SetScene(Student _Snt[])
 {
 	switch (SceneID)
-	{	
+	{
 	case 매뉴:
 		system("cls");
 		cout << "1. 학생추가\n2. 학생 정보 변경\n3. 학생삭제\n4. 학생점수\n5. 모든학생점수" << endl;
@@ -71,27 +72,27 @@ void SetScene(Student _Snt[])
 		if (iChoice == 5)
 			SceneID = 모든학생점수;
 		break;
-	
+
 	case 학생추가:
 		system("cls");
 
 		/*cout << "\n입력 :"; cin >> iSC;
-		
+
 		_Snt[iSC-1].Initialize();*/
 
 		_Snt[iSC - 1].Progress();
 		iCount++;
-		
+
 		SceneID = 매뉴;
 		system("pause");
 		break;
 
 	case 학생정보변경:
 		system("cls");
-	
+
 		cout << "\n입력 :"; cin >> iSC;
 
-			_Snt[iSC-1].Progress();
+		_Snt[iSC - 1].Progress();
 
 		SceneID = 매뉴;
 		break;
@@ -100,31 +101,32 @@ void SetScene(Student _Snt[])
 		system("cls");
 		cout << "학생삭제";
 		cout << "\n입력 :"; cin >> iSC;
-		_Snt[iSC-1].Initialize();
-		
+		_Snt[iSC - 1].Initialize();
+
 		SceneID = 매뉴;
 		break;
 
-	case 학생점수:	
-		system("cls");	
+	case 학생점수:
+		system("cls");
 		cout << "\n입력 :"; cin >> iSC;
-			_Snt[iSC-1].Render();
+		_Snt[iSC - 1].Render();
 
-			SceneID = 매뉴;
-			system("pause");		
-		break;	
+		SceneID = 매뉴;
+		system("pause");
+		break;
 
 	case 모든학생점수:
-		system("cls");	
+		system("cls");
 		for (int i = 0; i < iCount; i++)
-		{		
-				_Snt[i].Render();
+		{
+			_Snt[i].Render();
 		}
 
 		SceneID = 매뉴;
-			system("pause");
-		break;		
+		system("pause");
+		break;
 	}
+
 }
 
 /*
